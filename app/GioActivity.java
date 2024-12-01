@@ -44,75 +44,53 @@ public final class GioActivity extends Activity {
 	}
 
     private void checkAndRequestPermissions() {
-        // 检查蓝牙权限
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.BLUETOOTH)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{android.Manifest.permission.BLUETOOTH},
-                    REQUEST_PERMISSION_CODE);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) 
+            != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, 
+                new String[]{Manifest.permission.BLUETOOTH_SCAN}, 
+                REQUEST_CODE_BLUETOOTH_SCAN);
         }
 
-        // 检查蓝牙扫描权限
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && ContextCompat.checkSelfPermission(this,
-                android.Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{android.Manifest.permission.BLUETOOTH_SCAN},
-                    REQUEST_BLUETOOTH_SCAN_PERMISSION);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) 
+            != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, 
+                new String[]{Manifest.permission.BLUETOOTH_CONNECT}, 
+                REQUEST_CODE_BLUETOOTH_CONNECT);
         }
 
-        // 检查蓝牙连接权限
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && ContextCompat.checkSelfPermission(this,
-                android.Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{android.Manifest.permission.BLUETOOTH_CONNECT},
-                    REQUEST_BLUETOOTH_CONNECT_PERMISSION);
-        }
-
-        // 如果是Android 6.0及以上，检查位置权限（蓝牙扫描需要位置权限）
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-                ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                    REQUEST_PERMISSION_CODE);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) 
+            != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, 
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 
+                REQUEST_CODE_LOCATION);
         }
     }
 
-    // 处理权限请求回调
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
+        
         switch (requestCode) {
-            case REQUEST_PERMISSION_CODE:
+            case REQUEST_CODE_BLUETOOTH_SCAN:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // 蓝牙权限被授予
-                    Toast.makeText(this, "Bluetooth permission granted", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "REQUEST_CODE_BLUETOOTH_SCAN Bluetooth permission granted", Toast.LENGTH_SHORT).show();
                 } else {
-                    // 蓝牙权限被拒绝
-                    Toast.makeText(this, "Bluetooth permission denied", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "REQUEST_CODE_BLUETOOTH_SCAN Bluetooth permission denied", Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case REQUEST_BLUETOOTH_SCAN_PERMISSION:
+            case REQUEST_CODE_BLUETOOTH_CONNECT:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // 蓝牙扫描权限被授予
-                    Toast.makeText(this, "Bluetooth scan permission granted", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "REQUEST_CODE_BLUETOOTH_CONNECT Bluetooth permission granted", Toast.LENGTH_SHORT).show();
                 } else {
-                    // 蓝牙扫描权限被拒绝
-                    Toast.makeText(this, "Bluetooth scan permission denied", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "REQUEST_CODE_BLUETOOTH_CONNECT Bluetooth permission denied", Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case REQUEST_BLUETOOTH_CONNECT_PERMISSION:
+            case REQUEST_CODE_LOCATION:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // 蓝牙连接权限被授予
-                    Toast.makeText(this, "Bluetooth connect permission granted", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "REQUEST_CODE_LOCATION Bluetooth permission granted", Toast.LENGTH_SHORT).show();
                 } else {
-                    // 蓝牙连接权限被拒绝
-                    Toast.makeText(this, "Bluetooth connect permission denied", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "REQUEST_CODE_LOCATION Bluetooth permission denied", Toast.LENGTH_SHORT).show();
                 }
-                break;
-            default:
                 break;
         }
     }
