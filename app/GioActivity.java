@@ -116,7 +116,6 @@ public final class GioActivity extends Activity {
                 break;
         }
     }
-}
 
 	@Override public void onDestroy() {
 		view.destroy();
